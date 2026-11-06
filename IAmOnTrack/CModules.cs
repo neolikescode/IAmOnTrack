@@ -8,7 +8,7 @@ namespace IAmOnTrack
 {
     public class CModules
     {
-		// 3 data fields and properties that will store and handle
+		// 5 data fields and properties that will store and handle
 		// information about the Module the user selects
         private string _moduleCode;
 		public string ModuleCode
@@ -31,12 +31,32 @@ namespace IAmOnTrack
 				_moduleName = value; 
 			}
 		}
+		private int _academicYear;
+
+		public int AcademicYear
+        {
+			get { return _academicYear; }
+			set { _academicYear = value; }
+		}
+		private string _semester;
+
+		public string Semester
+        {
+			get { return _semester; }
+			set { _semester = value; }
+		}
+
 		// list to hold all the assessments added to the module by the user
-		public static List<CAssessments> assessments;
-		//default constructor
-		public CModules()
+		private List<CAssessments> _assessments;
+        public List<CAssessments> Assessments
+        {
+            get { return _assessments; }
+            private set { _assessments = value; }
+        }
+        //default constructor
+        public CModules()
 		{
-            assessments = new List<CAssessments>();
+            _assessments = new List<CAssessments>();
 		}
 	}
 }

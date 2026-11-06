@@ -9,10 +9,16 @@ namespace IAmOnTrack
     public class CMarkTracker
     {
         //List holds all the modules entered
-        public List<CModules> modules;
+        private List<CModules> _modules;
+        public List<CModules> Modules
+        {
+            get { return _modules; }
+            private set { _modules = value; }
+        }
+        //default constructor
         public CMarkTracker()
         {
-            modules = new List<CModules>();
+            Modules = new List<CModules>();
         }
     
     }

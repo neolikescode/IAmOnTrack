@@ -58,7 +58,7 @@ namespace IAmOnTrack
 			get { return _isMark; }
             set { _isMark = value;}
 		}
-		//classes default constructor
+		//default constructor
 		public CAssessments()
 		{
 
