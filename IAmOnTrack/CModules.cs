@@ -38,9 +38,9 @@ namespace IAmOnTrack
 			get { return _academicYear; }
 			set { _academicYear = value; }
 		}
-		private string _semester;
+		private int _semester;
 
-		public string Semester
+		public int Semester
         {
 			get { return _semester; }
 			set { _semester = value; }

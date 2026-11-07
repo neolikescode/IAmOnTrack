@@ -1,8 +1,10 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,18 +30,18 @@ namespace IAmOnTrack
         public CFileManager()
         {
             BaseDirectory = FolderName;
-
+            //creates the directory if it doesn't already exist.
             Directory.CreateDirectory(BaseDirectory);
         }
-        //Creates the Directory
+        //This method creates the Directory
         public string CreateYearDirectory(int year)
         {
             string directoryPath = Path.Combine(_baseDirectory, year.ToString());
             Directory.CreateDirectory(directoryPath);
             return directoryPath;
         }
-        //Creates the Excel File
-        public string CreateSemesterWorkbookPath(string yearDirectoryPath, int semester )
+        //This method creates the Excel File
+        public string CreateSemesterWorkbookPath(string yearDirectoryPath, int semester)
         {
             string excelFile = $"Semester {semester}.xlsx";
             string filePath = Path.Combine(yearDirectoryPath, excelFile);
@@ -47,8 +49,9 @@ namespace IAmOnTrack
         }
 
         /*
-            ///EXCEL PORTION///
+                            ///EXCEL PORTION///
         */
+
         //This method creates or opens the Excel workbook we will be saving data to
         public XLWorkbook OpenOrCreateWorkbook(string filePath)
         {
@@ -150,21 +153,21 @@ namespace IAmOnTrack
                 row++;
             }
         }
-        //This method calculates and displays the summmary of the students work
+        //This method calculates and displays the summmary of the students work/marks
         public void SetupSemesterSummary(IXLWorksheet worksheet, CModules module)
         {
             double earnedContribution = 0;
             double completedAssessmentWeight = 0;
-            foreach(CAssessments assessment in module.Assessments)
+            foreach (CAssessments assessment in module.Assessments)
             {
-                if(assessment.IsMark == true && assessment.MaximumMark > 0)
+                if (assessment.IsMark == true && assessment.MaximumMark > 0)
                 {
                     // Calculate the assessment percentage
                     double percentage = 0;
                     percentage = (assessment.MarkObtained / assessment.MaximumMark) * 100;
-                    
+
                     // Calculate the weighted contribution
-                    double contribution = (percentage * assessment.AssessmentWeight) /  100;
+                    double contribution = (percentage * assessment.AssessmentWeight) / 100;
 
                     // Add to the earned semester contribution
                     earnedContribution += contribution;
@@ -189,5 +192,54 @@ namespace IAmOnTrack
             worksheet.Cell(summaryRow + 1, 1).Value = "Performance Across Completed Assessments";
             worksheet.Cell(summaryRow + 1, 2).Value = performance;
         }
+        //This method is the most important method
+        //It is responsible for actually exporting/saving the data to the excel workbook
+        public void ExportModule(CModules module)
+        {
+            //I am now attempting to create the directory that will store the Semester Workbook
+            //We first get the year of the workbook we want (2026-2028)
+            string dir = CreateYearDirectory(module.AcademicYear);
+
+            //We then get the semester the student wants to make the workbook for
+            string filePath = CreateSemesterWorkbookPath(dir, module.Semester);
+
+            //CHECKS IF THE FILE ALREADY EXISTS
+            bool fileExists = File.Exists(filePath);
+
+            //Now we create/open the Excel Workbook
+            using (XLWorkbook excel = OpenOrCreateWorkbook(filePath))
+            {
+                //We then create/get the specific worksheet we want to work in
+                IXLWorksheet excelWorksheet = GetOrCreateWorksheet(excel, module.ModuleCode);
+
+                //clears the existing worksheet before rebuilding it, to ensure old data is removed in Excel
+                excelWorksheet.Clear();
+
+                //Rebuilding the worksheet
+                //Now that the old data is removed we will create the worksheet using the methods we created above for the Workbook
+                //In this exact order below
+                //writes the module information.
+                SetupWorksheetHeader(excelWorksheet, module);
+                //writes the column headings.
+                SetupAssessmentTable(excelWorksheet);
+                //inserts the assessment records.
+                PopulateAssessmentRows(excelWorksheet, module);
+                //calculates and inserts the summary.
+                SetupSemesterSummary(excelWorksheet, module);
+
+                //Save the data to the Excel File
+                if (fileExists)
+                {
+                    // Save existing workbook
+                    excel.Save();
+                }
+                else
+                {
+                    // Save new workbook using filePath
+                    excel.SaveAs(filePath);
+                }
+            }
+        }
     }
 }
+
