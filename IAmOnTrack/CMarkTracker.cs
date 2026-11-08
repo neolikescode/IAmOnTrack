@@ -10,16 +10,29 @@ namespace IAmOnTrack
     {
         //List holds all the modules entered
         private List<CModules> _modules;
-        public List<CModules> Modules
+        public IReadOnlyList<CModules> Modules
         {
-            get { return _modules; }
-            private set { _modules = value; }
+            //AsReadOnly ensures that External code can inspect the modules but cannot add or remove them through the returned collection.
+            get { return _modules.AsReadOnly(); }
         }
         //default constructor
         public CMarkTracker()
         {
-            Modules = new List<CModules>();
+            _modules = new List<CModules>();
         }
-    
+        public void AddModule(CModules module)
+        {
+            //Cjcks wheteher the module is null
+            if (module == null)
+            {
+                throw new ArgumentNullException(nameof(module), "Module cannot be null");
+            }
+            //check whether a module with the same ModuleCode, AcademicYear and Semester already exists before adding it, using system.Linq
+            if (_modules.Any(m =>m.ModuleCode == module.ModuleCode &&m.AcademicYear == module.AcademicYear && m.Semester == module.Semester))
+            {
+                throw new InvalidOperationException("Cannot add duplicate modules");
+            }
+            _modules.Add(module);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace IAmOnTrack
@@ -14,10 +15,23 @@ namespace IAmOnTrack
 		public string AssessmentName
         {
 			get { return _assessmentName; }
-			set 
-			{ 
+            private set
+            {
 
-				_assessmentName = value; 
+                //DATA VALIDATION
+
+                //to prevent empty text from being entered
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Assessment Name cannot be blank");
+                }
+                string makePattern = @"^[a-zA-Z0-9\s-]+$";
+                //Checks if the text the user entered only contains letters, spaces, or hyphens.
+                if (!Regex.IsMatch(value.Trim(), makePattern))
+                {
+                    throw new FormatException("Assessment Name can only contain letters, numbers, spaces, or hyphens.");
+                }
+                _assessmentName = value.Trim();
 			}
 		}
 		private double _assessmentWeight;
@@ -25,43 +39,88 @@ namespace IAmOnTrack
 		public double AssessmentWeight
         {
 			get { return _assessmentWeight; }
-            set
+            private set
             {
-
+                //DATA VALIDATION
+                if (value <= 0 || value > 100)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Assessment weight cannot be greater than 100 or less than or equal to 0");
+                }
                 _assessmentWeight = value; 
 			}
 		}
-		private double _markObtained;
+        private double _maximumMark;
+        public double MaximumMark
+        {
+            get { return _maximumMark; }
+            private set
+            {
+                //DATA VALIDATION
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Maximum mark possible cannot be less than or equal to 0");
+                }
+                _maximumMark = value;
+            }
+        }
+        private double _markObtained;
 
 		public double MarkObtained
         {
 			get { return _markObtained; }
-            set
+            private set
             {
-
+                //DATA VALIDATION
+                if(value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Mark obtained cannot be a negative number");
+                }
                 _markObtained = value; 
 			}
 		}
-		private double _maximumMark;
-		public double MaximumMark
-        {
-			get { return _maximumMark; }
-            set
-            {
-
-               _maximumMark = value; 
-			}
-		}
+		
 		private bool _isMark;
 		public bool IsMark
         {
 			get { return _isMark; }
-            set { _isMark = value;}
+            //set to private to prevent other classes from setting it to true or false
+            private set { _isMark = value;}
 		}
-		//default constructor
-		public CAssessments()
-		{
+        //Parameterized constructor that will be used when user has not recieved their mark obtained
+        public CAssessments(string assessmentName, double assessmentWeight, double assessmentMaximumMark)
+        {
+            AssessmentName = assessmentName;
+            AssessmentWeight = assessmentWeight;
+            MaximumMark = assessmentMaximumMark;
+            IsMark = false;
+        }
+        //Parameterized constructor that will be used when user has recieved their mark obtained
+        public CAssessments(string assessmentName, double assessmentWeight, double assessmentMaximumMark, double assessmentMarkObtained)
+        {
+            AssessmentName = assessmentName;
+            AssessmentWeight = assessmentWeight;
+            EnterMark(assessmentMarkObtained, assessmentMaximumMark);
+        }
+        //This method recieves the Mark obtained and Maximum mark of an assessment (it adds or updates the marks)
+        //in order to prevent the user from entering a mark obtained that is greater than the maximum value
+        public void EnterMark(double markObtained, double maximumMark)
+        { 
+            if (maximumMark > 0)
+            {
+                if(markObtained < 0 || markObtained > maximumMark)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(markObtained), markObtained, "Mark obtained cannot be less than 0 or greater than the maximum number");
+                }
+                MaximumMark = maximumMark;
+                MarkObtained = markObtained;
+                IsMark = true;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(maximumMark), maximumMark, "Maximum mark cannot be less or equal to 0");
+            }
+            
+        }
 
-		}
-	}
+    }
 }
