@@ -116,7 +116,6 @@ namespace IAmOnTrack
             _assessments = new List<CAssessments>();
 		}
         //This method checks to see the assessment object being added is not null and if its not it adds it to the Aseessments list
-
         public void AddAssessment(CAssessments assessment)
         {
             //This method checks to see the assessment object being added is not null and if its not it adds it to the Assessments list
@@ -142,7 +141,32 @@ namespace IAmOnTrack
 
             _assessments.Add(assessment);
         }
-
-
+        // Searches for an existing assessment by name and returns it
+        public CAssessments FindAssessment(string assessmentName)
+        {
+            // Access the module's assessments
+            foreach (CAssessments assess in _assessments)
+            {
+                // Searches the list for the assessment name, ignoring case differences
+                if (string.Equals(assess.AssessmentName, assessmentName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return assess;
+                }
+            }
+            // Return null if no matching assessment is found
+            return null;
+        }
+        public void UpdateAssessmentMark(string assessmentName, double markObtained, double maximumMark)
+        {
+            CAssessments assess = FindAssessment(assessmentName);
+            if(assess != null)
+            {
+               assess.EnterMark(markObtained, maximumMark);
+            }
+            else
+            {
+                throw new ArgumentNullException("Assessment not found", nameof(assess));
+            }
+        }
     }
 }

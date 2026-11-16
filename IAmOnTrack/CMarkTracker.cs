@@ -22,7 +22,7 @@ namespace IAmOnTrack
         }
         public void AddModule(CModules module)
         {
-            //Cjcks wheteher the module is null
+            //Checks wheteher the module is null
             if (module == null)
             {
                 throw new ArgumentNullException(nameof(module), "Module cannot be null");
@@ -36,13 +36,15 @@ namespace IAmOnTrack
         }
         public CModules FindModule(string moduleCode, int academicYear, int semester)
         {
-            foreach(CModules mod in _modules)
+            // Access the module's
+            foreach (CModules mod in _modules)
             {
-                if(mod.ModuleCode == moduleCode && mod.AcademicYear == academicYear && mod.Semester == semester)
+                if (mod.ModuleCode.ToUpper() == moduleCode.ToUpper() && mod.AcademicYear == academicYear && mod.Semester == semester)
                 {
-
+                    return mod;
                 }
             }
+            return null;
         }
     }
 }
