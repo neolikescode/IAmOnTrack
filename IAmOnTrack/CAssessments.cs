@@ -121,6 +121,12 @@ namespace IAmOnTrack
             }
             
         }
-
+        // This method (updates/ allows you to edit) the assessment name and weight
+        public void UpdateAssessmentDetails(string assessmentName, double assessmentWeight)
+        {
+            //since the AssessmentName and AssessmentWeight setters are private, we need a controlled method to update them
+            AssessmentName = assessmentName;
+            AssessmentWeight = assessmentWeight;
+        }
     }
 }

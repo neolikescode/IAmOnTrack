@@ -156,6 +156,7 @@ namespace IAmOnTrack
             // Return null if no matching assessment is found
             return null;
         }
+        //This method updates the assessment marks entered
         public void UpdateAssessmentMark(string assessmentName, double markObtained, double maximumMark)
         {
             CAssessments assess = FindAssessment(assessmentName);
@@ -165,8 +166,54 @@ namespace IAmOnTrack
             }
             else
             {
-                throw new ArgumentNullException("Assessment not found", nameof(assess));
+                throw new InvalidOperationException("Assessment not found.");
             }
+        }
+        // This method removes an assessment from a module
+        public void RemoveAssessment(string assessmentName)
+        {
+            // Find the assessment that needs to be removed
+            CAssessments assess = FindAssessment(assessmentName);
+
+            // Check whether the assessment exists
+            if (assess != null)
+            {
+                _assessments.Remove(assess);
+            }
+            else
+            {
+                throw new InvalidOperationException("Assessment not found.");
+            }
+        }
+        // This method updates an assessment's details
+        public void UpdateAssessmentDetails(string currentAssessmentName, string newAssessmentName, double newAssessmentWeight)
+        {
+            // Find the existing assessment
+            CAssessments assess = FindAssessment(currentAssessmentName);
+
+            if (assess == null)
+            {
+                throw new InvalidOperationException("Assessment not found.");
+            }
+
+            // Check for duplicate assessment names
+            CAssessments duplicate = FindAssessment(newAssessmentName);
+
+            if (duplicate != null && duplicate != assess)
+            {
+                throw new InvalidOperationException("An assessment with this name already exists.");
+            }
+
+            // Calculate the combined weight after the proposed update
+            double totalWeight = _assessments.Sum(a => a.AssessmentWeight) - assess.AssessmentWeight + newAssessmentWeight;
+
+            if (totalWeight > 100)
+            {
+                throw new InvalidOperationException("Combined assessment weights cannot exceed 100%.");
+            }
+
+            // Update the assessment details
+            assess.UpdateAssessmentDetails(newAssessmentName, newAssessmentWeight);
         }
     }
 }
