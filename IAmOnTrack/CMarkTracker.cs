@@ -58,7 +58,7 @@ namespace IAmOnTrack
             }
             else
             {
-                throw new InvalidOperationException("Module not found.", nameof(assessment));
+                throw new InvalidOperationException("Module not found.");
             }
         }
         //This methods allows the application to update an assessments marks
@@ -73,7 +73,7 @@ namespace IAmOnTrack
             }
             else
             {
-                throw new InvalidOperationException("Module not found.", nameof(assessment));
+                throw new InvalidOperationException("Module not found.");
             }
         }
         //This methods creates a list (it can only retrieve info since it is an IReadOnly list) that will store modules that are specific to the semester
