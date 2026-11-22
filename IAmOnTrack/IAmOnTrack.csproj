@@ -94,11 +94,73 @@
     <Compile Include="CFileManager.cs" />
     <Compile Include="CMarkTracker.cs" />
     <Compile Include="CModules.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="CActivityEntry.cs" />
+    <Compile Include="CActivityLog.cs" />
+    <Compile Include="CDashboardStatistics.cs" />
+    <Compile Include="CNextStep.cs" />
+    <Compile Include="CSemesterProgress.cs" />
+    <Compile Include="UI\ActionBanner.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ActionCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ActivityCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CircularProgress.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\DashboardHeader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\IconButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Icons.cs" />
+    <Compile Include="UI\InfoCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\NavButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\NextStepsCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\PerformanceCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\SearchBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\SemesterProgressCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\SidebarPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\StatCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Theme.cs" />
+    <Compile Include="UI\WindowControlButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DashBoardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="DashBoardForm.Designer.cs">
+      <DependentUpon>DashBoardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.Layout.cs">
+      <DependentUpon>DashBoardForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="MarksForm.cs">
       <SubType>Form</SubType>
