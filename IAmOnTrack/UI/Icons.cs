@@ -8,7 +8,8 @@ namespace IAmOnTrack.UI
     {
         None, Home, Layers, Clipboard, BarChart, BarChartFilled, Folder, Gear, Search, Bell,
         DocPlus, Clock, Calendar, Target, Plus, Arrow, Inbox, GradCap, Chevron,
-        Minimize, Maximize, Restore, Close
+        Minimize, Maximize, Restore, Close,
+        Eye, Edit, Trash, Download, Refresh, ChevronLeft, ChevronRight
     }
 
     //Every icon is drawn as vector lines on a 24 x 24 grid, so icons are crisp at any size
@@ -199,6 +200,44 @@ namespace IAmOnTrack.UI
 
                     case IconKind.Chevron:
                         g.DrawLines(pen, new[] { P(6f, 9f), P(12f, 15f), P(18f, 9f) });
+                        break;
+
+                    case IconKind.Eye:
+                        g.DrawBezier(pen, P(2f, 12f), P(6f, 5f), P(18f, 5f), P(22f, 12f));
+                        g.DrawBezier(pen, P(2f, 12f), P(6f, 19f), P(18f, 19f), P(22f, 12f));
+                        g.DrawEllipse(pen, 9f, 9f, 6f, 6f);
+                        break;
+
+                    case IconKind.Edit:
+                        g.DrawPolygon(pen, new[] { P(4f, 20f), P(4.8f, 15.6f), P(16.5f, 3.9f), P(20.1f, 7.5f), P(8.4f, 19.2f) });
+                        g.DrawLine(pen, 13.5f, 6.9f, 17.1f, 10.5f);
+                        break;
+
+                    case IconKind.Trash:
+                        g.DrawLine(pen, 4f, 6.5f, 20f, 6.5f);
+                        g.DrawLines(pen, new[] { P(9f, 6.5f), P(9f, 4f), P(15f, 4f), P(15f, 6.5f) });
+                        g.DrawLines(pen, new[] { P(6f, 6.5f), P(7f, 20f), P(17f, 20f), P(18f, 6.5f) });
+                        g.DrawLine(pen, 10f, 10.5f, 10f, 16f);
+                        g.DrawLine(pen, 14f, 10.5f, 14f, 16f);
+                        break;
+
+                    case IconKind.Download:
+                        g.DrawLine(pen, 12f, 4f, 12f, 15f);
+                        g.DrawLines(pen, new[] { P(7f, 10.5f), P(12f, 15.5f), P(17f, 10.5f) });
+                        g.DrawLines(pen, new[] { P(4f, 16f), P(4f, 20f), P(20f, 20f), P(20f, 16f) });
+                        break;
+
+                    case IconKind.Refresh:
+                        g.DrawArc(pen, 4f, 4f, 16f, 16f, 60f, 270f);
+                        g.DrawLines(pen, new[] { P(19f, 3.6f), P(19f, 8f), P(14.6f, 8f) });
+                        break;
+
+                    case IconKind.ChevronLeft:
+                        g.DrawLines(pen, new[] { P(15f, 6f), P(9f, 12f), P(15f, 18f) });
+                        break;
+
+                    case IconKind.ChevronRight:
+                        g.DrawLines(pen, new[] { P(9f, 6f), P(15f, 12f), P(9f, 18f) });
                         break;
 
                     case IconKind.Minimize:

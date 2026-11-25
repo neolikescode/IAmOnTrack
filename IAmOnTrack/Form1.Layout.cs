@@ -7,13 +7,10 @@ namespace IAmOnTrack
 {
     //Builds the dashboard layout from panels and table layouts (Dock / Anchor based, so it resizes).
     //Controls are created in code rather than the designer because they are custom-painted.
-    public partial class DashBoardForm
+    public partial class Form1
     {
         private SidebarPanel _sidebar;
         private Panel _titleBar;
-        private WindowControlButton _minimizeButton;
-        private WindowControlButton _maximizeButton;
-        private WindowControlButton _closeButton;
         private DashboardHeader _header;
         private Panel _content;
         private ActionBanner _actionBanner;
@@ -39,32 +36,12 @@ namespace IAmOnTrack
             // ---------- Sidebar ----------
             _sidebar = new SidebarPanel();
             _sidebar.Dock = DockStyle.Left;
-            _sidebar.SetUser(UserFullName, UserRole);
+            _sidebar.SetUser(CurrentUser.FullName, CurrentUser.Role);
             _sidebar.DragRequested += DragHandle_MouseDown;
+            _sidebar.Navigate += Sidebar_Navigate;
 
-            // ---------- Title bar (drag area + window buttons) ----------
-            _titleBar = new Panel();
-            _titleBar.Dock = DockStyle.Top;
-            _titleBar.Height = 40;
-            _titleBar.BackColor = Theme.OffWhite;
-            _titleBar.MouseDown += DragHandle_MouseDown;
-
-            _minimizeButton = new WindowControlButton(IconKind.Minimize);
-            _minimizeButton.Dock = DockStyle.Right;
-            _minimizeButton.Click += (s, e) => WindowState = FormWindowState.Minimized;
-
-            _maximizeButton = new WindowControlButton(IconKind.Maximize);
-            _maximizeButton.Dock = DockStyle.Right;
-            _maximizeButton.Click += (s, e) => ToggleMaximize();
-
-            _closeButton = new WindowControlButton(IconKind.Close);
-            _closeButton.Dock = DockStyle.Right;
-            _closeButton.Click += (s, e) => Close();
-
-            //the control added LAST is docked first, so Close ends up on the far right
-            _titleBar.Controls.Add(_minimizeButton);
-            _titleBar.Controls.Add(_maximizeButton);
-            _titleBar.Controls.Add(_closeButton);
+            // ---------- Title bar (drag area + window buttons come from BorderlessForm) ----------
+            _titleBar = CreateTitleBar();
 
             // ---------- Header ----------
             _header = new DashboardHeader();

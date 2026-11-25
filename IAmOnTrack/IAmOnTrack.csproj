@@ -99,6 +99,26 @@
     <Compile Include="CDashboardStatistics.cs" />
     <Compile Include="CNextStep.cs" />
     <Compile Include="CSemesterProgress.cs" />
+    <Compile Include="CAssessmentRecord.cs" />
+    <Compile Include="CRecordFilter.cs" />
+    <Compile Include="CPager.cs" />
+    <Compile Include="CAcademicRecords.cs" />
+    <Compile Include="CurrentUser.cs" />
+    <Compile Include="UI\BorderlessForm.cs" />
+    <Compile Include="UI\ConfirmDialog.cs" />
+    <Compile Include="UI\EditAssessmentDialog.cs" />
+    <Compile Include="UI\EditMarkDialog.cs" />
+    <Compile Include="UI\FilterDropdown.cs" />
+    <Compile Include="UI\InputField.cs" />
+    <Compile Include="UI\KeyValueList.cs" />
+    <Compile Include="UI\ModernDialog.cs" />
+    <Compile Include="UI\ModernMenu.cs" />
+    <Compile Include="UI\NavTarget.cs" />
+    <Compile Include="UI\PageHeader.cs" />
+    <Compile Include="UI\PagerBar.cs" />
+    <Compile Include="UI\RecordDetailsDialog.cs" />
+    <Compile Include="UI\RecordGrid.cs" />
+    <Compile Include="UI\TabStrip.cs" />
     <Compile Include="UI\ActionBanner.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -152,15 +172,17 @@
     <Compile Include="UI\WindowControlButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DashBoardForm.cs">
+    <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DashBoardForm.Designer.cs">
-      <DependentUpon>DashBoardForm.cs</DependentUpon>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RecordsForm.Layout.cs">
+      <DependentUpon>RecordsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.Layout.cs">
-      <DependentUpon>DashBoardForm.cs</DependentUpon>
-      <SubType>Form</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MarksForm.cs">
       <SubType>Form</SubType>

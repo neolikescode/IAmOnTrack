@@ -15,6 +15,9 @@ namespace IAmOnTrack.UI
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
 
         private readonly TextBox _input;
+
+        //Raised every time the text changes
+        public event EventHandler QueryChanged;
         private readonly string _placeholder;
 
         public string PlaceholderText
@@ -43,7 +46,14 @@ namespace IAmOnTrack.UI
             _input.ForeColor = Theme.Charcoal;
             _input.GotFocus += (s, e) => Invalidate();
             _input.LostFocus += (s, e) => Invalidate();
-            _input.TextChanged += (s, e) => Invalidate();
+            _input.TextChanged += (s, e) =>
+            {
+                Invalidate();
+                if (QueryChanged != null)
+                {
+                    QueryChanged(this, EventArgs.Empty);
+                }
+            };
             _input.HandleCreated += (s, e) => ApplyPlaceholder();
             Controls.Add(_input);
         }
@@ -61,6 +71,11 @@ namespace IAmOnTrack.UI
             catch (DllNotFoundException)
             {
             }
+        }
+
+        public void ClearQuery()
+        {
+            _input.Clear();
         }
 
         //Used by the Ctrl + K shortcut

@@ -12,6 +12,7 @@ namespace IAmOnTrack.UI
         private readonly Color _tileColor;
         private readonly Color _iconColor;
         private int _value;
+        private string _valueText;
 
         public int Value
         {
@@ -19,6 +20,17 @@ namespace IAmOnTrack.UI
             set
             {
                 _value = value;
+                Invalidate();
+            }
+        }
+
+        //When set, this text is shown instead of the number (e.g. "76.5%" or a dash)
+        public string ValueText
+        {
+            get { return _valueText; }
+            set
+            {
+                _valueText = value;
                 Invalidate();
             }
         }
@@ -61,7 +73,7 @@ namespace IAmOnTrack.UI
             int textX = tile.Right + 16;
             int textWidth = Math.Max(40, b.Right - 16 - textX);
             Theme.Text(g, _label, Theme.Semibold(14), new RectangleF(textX, tile.Y - 2, textWidth, 20), Theme.Charcoal, Theme.SingleLine);
-            Theme.Text(g, _value.ToString(), Theme.Font(34, FontStyle.Bold), new RectangleF(textX, tile.Y + 18, textWidth, 42), Theme.Charcoal, Theme.SingleLine);
+            Theme.Text(g, _valueText ?? _value.ToString(), Theme.Font(34, FontStyle.Bold), new RectangleF(textX, tile.Y + 18, textWidth, 42), Theme.Charcoal, Theme.SingleLine);
         }
     }
 }

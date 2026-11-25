@@ -1,4 +1,4 @@
-﻿namespace IAmOnTrack
+namespace IAmOnTrack
 {
     partial class RecordsForm
     {
@@ -29,9 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "RecordsForm";
+            this.SuspendLayout();
+            // 
+            // RecordsForm
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
+            this.ClientSize = new System.Drawing.Size(1360, 840);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(960, 640);
+            this.Name = "RecordsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "IAmOnTrack - Academic Records";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

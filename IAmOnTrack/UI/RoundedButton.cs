@@ -19,6 +19,7 @@ namespace IAmOnTrack.UI
         public Color TextColor { get; set; }
         public int CornerRadius { get; set; }
         public IconKind TrailingIcon { get; set; }
+        public IconKind LeadingIcon { get; set; }
 
         public RoundedButton()
         {
@@ -34,6 +35,7 @@ namespace IAmOnTrack.UI
             TextColor = Color.White;
             CornerRadius = 12;
             TrailingIcon = IconKind.None;
+            LeadingIcon = IconKind.None;
             BackColor = Theme.White;
             Size = new Size(200, 44);
 
@@ -58,7 +60,8 @@ namespace IAmOnTrack.UI
             Theme.HighQuality(g);
             g.Clear(BackColor);
 
-            Color fill = _pressed ? PressedColor : Theme.Blend(ButtonColor, HoverColor, _hover);
+            Color fill = !Enabled ? Theme.TrackGrey : (_pressed ? PressedColor : Theme.Blend(ButtonColor, HoverColor, _hover));
+            Color foreground = Enabled ? TextColor : Theme.Muted;
             RectangleF r = new RectangleF(0, 0, Width, Height);
             Theme.FillRounded(g, fill, r, CornerRadius);
 
@@ -76,17 +79,31 @@ namespace IAmOnTrack.UI
             int iconSize = 16;
             int gap = 8;
             Size textSize = Theme.Measure(g, Text, Font);
-            int groupWidth = textSize.Width + (TrailingIcon != IconKind.None ? gap + iconSize : 0);
+            int groupWidth = textSize.Width;
+            if (TrailingIcon != IconKind.None) groupWidth += gap + iconSize;
+            if (LeadingIcon != IconKind.None) groupWidth += gap + iconSize;
             float x = (Width - groupWidth) / 2f;
 
-            Theme.Text(g, Text, Font, new RectangleF(x, 0, textSize.Width + 2, Height), TextColor, Theme.SingleLine);
+            if (LeadingIcon != IconKind.None)
+            {
+                Icons.Draw(g, LeadingIcon, new RectangleF(x, (Height - iconSize) / 2f, iconSize, iconSize), foreground, 2.2f);
+                x += iconSize + gap;
+            }
+
+            Theme.Text(g, Text, Font, new RectangleF(x, 0, textSize.Width + 2, Height), foreground, Theme.SingleLine);
 
             if (TrailingIcon != IconKind.None)
             {
                 float nudge = 2f * _hover; //arrow slides right slightly on hover
                 RectangleF iconRect = new RectangleF(x + textSize.Width + gap + nudge, (Height - iconSize) / 2f, iconSize, iconSize);
-                Icons.Draw(g, TrailingIcon, iconRect, TextColor, 2.2f);
+                Icons.Draw(g, TrailingIcon, iconRect, foreground, 2.2f);
             }
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            Invalidate();
         }
 
         protected override void OnMouseEnter(EventArgs e)

@@ -12,6 +12,9 @@ namespace IAmOnTrack.UI
 
         private readonly ToolTip _tip = new ToolTip();
         private readonly NavButton[] _navigation;
+        private readonly NavButton _modulesButton;
+        private readonly NavButton _assessmentsButton;
+        private readonly NavButton _marksButton;
         private string _displayName = "";
         private string _roleText = "";
 
@@ -19,6 +22,9 @@ namespace IAmOnTrack.UI
 
         //Raised when the user presses the mouse on the logo area (so the window can be dragged from there)
         public event MouseEventHandler DragRequested;
+
+        //Raised when the user clicks Dashboard, Modules, Assessments or My Marks
+        public event EventHandler<NavigationEventArgs> Navigate;
 
         public SidebarPanel()
         {
@@ -37,14 +43,40 @@ namespace IAmOnTrack.UI
             NavButton settings = new NavButton("Settings", IconKind.Gear);
 
             _navigation = new[] { DashboardButton, modules, assessments, marks, data, settings };
+            _modulesButton = modules;
+            _assessmentsButton = assessments;
+            _marksButton = marks;
+
             foreach (NavButton button in _navigation)
             {
                 Controls.Add(button);
-                if (button != DashboardButton)
-                {
-                    _tip.SetToolTip(button, "Coming soon");
-                }
             }
+
+            //Data & Files and Settings are still visual placeholders
+            _tip.SetToolTip(data, "Coming soon");
+            _tip.SetToolTip(settings, "Coming soon");
+
+            DashboardButton.Click += (s, e) => RaiseNavigate(NavTarget.Dashboard);
+            modules.Click += (s, e) => RaiseNavigate(NavTarget.Modules);
+            assessments.Click += (s, e) => RaiseNavigate(NavTarget.Assessments);
+            marks.Click += (s, e) => RaiseNavigate(NavTarget.Marks);
+        }
+
+        private void RaiseNavigate(NavTarget target)
+        {
+            if (Navigate != null)
+            {
+                Navigate(this, new NavigationEventArgs(target));
+            }
+        }
+
+        //Highlights the item for the page that is currently open
+        public void SetActive(NavTarget? target)
+        {
+            DashboardButton.Selected = target == NavTarget.Dashboard;
+            _modulesButton.Selected = target == NavTarget.Modules;
+            _assessmentsButton.Selected = target == NavTarget.Assessments;
+            _marksButton.Selected = target == NavTarget.Marks;
         }
 
         public void SetUser(string displayName, string roleText)
