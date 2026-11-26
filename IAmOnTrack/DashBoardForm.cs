@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using IAmOnTrack.UI;
-//I asked Claude code to implement my UI design to cut back on time because i was only interested in working on the backend
 namespace IAmOnTrack
 {
     //The main dashboard window. It is borderless (custom title bar) but keeps resizing, minimise,

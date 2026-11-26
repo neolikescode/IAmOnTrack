@@ -57,7 +57,9 @@
     <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -104,21 +106,45 @@
     <Compile Include="CPager.cs" />
     <Compile Include="CAcademicRecords.cs" />
     <Compile Include="CurrentUser.cs" />
-    <Compile Include="UI\BorderlessForm.cs" />
-    <Compile Include="UI\ConfirmDialog.cs" />
-    <Compile Include="UI\EditAssessmentDialog.cs" />
-    <Compile Include="UI\EditMarkDialog.cs" />
-    <Compile Include="UI\FilterDropdown.cs" />
-    <Compile Include="UI\InputField.cs" />
-    <Compile Include="UI\KeyValueList.cs" />
-    <Compile Include="UI\ModernDialog.cs" />
+    <Compile Include="UI\BorderlessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ConfirmDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EditAssessmentDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EditMarkDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FilterDropdown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\InputField.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\KeyValueList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ModernDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ModernMenu.cs" />
     <Compile Include="UI\NavTarget.cs" />
-    <Compile Include="UI\PageHeader.cs" />
-    <Compile Include="UI\PagerBar.cs" />
-    <Compile Include="UI\RecordDetailsDialog.cs" />
+    <Compile Include="UI\PageHeader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\PagerBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\RecordDetailsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\RecordGrid.cs" />
-    <Compile Include="UI\TabStrip.cs" />
+    <Compile Include="UI\TabStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\ActionBanner.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -172,17 +198,19 @@
     <Compile Include="UI\WindowControlButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="DashBoardFormShow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="DashBoardFormShow.Designer.cs">
+      <DependentUpon>DashBoardFormShow.cs</DependentUpon>
     </Compile>
     <Compile Include="RecordsForm.Layout.cs">
       <DependentUpon>RecordsForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Layout.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+      <DependentUpon>DashBoardFormShow.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="MarksForm.cs">
       <SubType>Form</SubType>

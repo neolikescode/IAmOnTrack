@@ -1,6 +1,6 @@
 namespace IAmOnTrack
 {
-    partial class Form1
+    partial class DashBoardFormShow
     {
         /// <summary>
         /// Required designer variable.

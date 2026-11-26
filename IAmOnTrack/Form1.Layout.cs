@@ -7,7 +7,7 @@ namespace IAmOnTrack
 {
     //Builds the dashboard layout from panels and table layouts (Dock / Anchor based, so it resizes).
     //Controls are created in code rather than the designer because they are custom-painted.
-    public partial class Form1
+    public partial class DashBoardFormShow
     {
         private SidebarPanel _sidebar;
         private Panel _titleBar;

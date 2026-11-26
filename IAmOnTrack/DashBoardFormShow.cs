@@ -8,7 +8,7 @@ namespace IAmOnTrack
 {
     //The main dashboard window. Window chrome (borderless, resize, drag, maximise...) comes from
     //BorderlessForm; the visual layout is built in Form1.Layout.cs.
-    public partial class Form1 : BorderlessForm
+    public partial class DashBoardFormShow : BorderlessForm
     {
         // ---- Existing application objects (shared with the Records form) ----
         private readonly CMarkTracker _tracker;
@@ -16,12 +16,12 @@ namespace IAmOnTrack
         private readonly CDashboardStatistics _statistics;
 
         //Default constructor used by Program.cs: the form owns a fresh tracker and activity log.
-        public Form1() : this(new CMarkTracker(), new CActivityLog())
+        public DashBoardFormShow() : this(new CMarkTracker(), new CActivityLog())
         {
         }
 
         //Lets another class (e.g. a future data-loading step) hand the dashboard an existing tracker
-        public Form1(CMarkTracker tracker, CActivityLog activityLog)
+        public DashBoardFormShow(CMarkTracker tracker, CActivityLog activityLog)
         {
             if (tracker == null)
             {
