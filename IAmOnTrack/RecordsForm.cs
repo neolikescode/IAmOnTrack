@@ -343,10 +343,10 @@ namespace IAmOnTrack
                     ShowAddMenu(_grid);
                     break;
                 case EmptyAction.AddAssessment:
-                    ShowChildForm(() => new AssessmentForm());
+                    ShowChildForm(() => new AssessmentForm(_tracker, _activityLog));
                     break;
                 case EmptyAction.EnterMarks:
-                    ShowChildForm(() => new MarksForm());
+                    ShowChildForm(() => new MarksForm(_tracker, _activityLog));
                     break;
                 case EmptyAction.ClearFilters:
                     ClearFilters();
@@ -438,15 +438,19 @@ namespace IAmOnTrack
 
         private void ShowAddMenu(Control anchor)
         {
-            ContextMenuStrip menu = ModernMenu.Create(new[] { "Add Assessment", "Enter Marks" }, -1, index =>
+            ContextMenuStrip menu = ModernMenu.Create(new[] { "Add Module", "Add Assessment", "Enter Marks" }, -1, index =>
             {
                 if (index == 0)
                 {
-                    ShowChildForm(() => new AssessmentForm());
+                    ShowChildForm(() => new ModuleForm(_tracker, _activityLog));
+                }
+                else if (index == 1)
+                {
+                    ShowChildForm(() => new AssessmentForm(_tracker, _activityLog));
                 }
                 else
                 {
-                    ShowChildForm(() => new MarksForm());
+                    ShowChildForm(() => new MarksForm(_tracker, _activityLog));
                 }
             });
             menu.MinimumSize = new System.Drawing.Size(Math.Max(anchor.Width, 190), 0);

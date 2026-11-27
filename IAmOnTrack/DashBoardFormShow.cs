@@ -107,12 +107,12 @@ namespace IAmOnTrack
 
         private void AddAssessmentButton_Click(object sender, EventArgs e)
         {
-            ShowChildForm(() => new AssessmentForm());
+            ShowChildForm(() => new AssessmentForm(_tracker, _activityLog));
         }
 
         private void EnterMarksButton_Click(object sender, EventArgs e)
         {
-            ShowChildForm(() => new MarksForm());
+            ShowChildForm(() => new MarksForm(_tracker, _activityLog));
         }
 
         //Opens an existing form as a dialog, then refreshes the dashboard when it closes.

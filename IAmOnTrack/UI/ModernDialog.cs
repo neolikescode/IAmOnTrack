@@ -18,6 +18,35 @@ namespace IAmOnTrack.UI
         protected RoundedButton PrimaryButton { get; private set; }
         protected RoundedButton SecondaryButton { get; private set; }
 
+        //Lets the Visual Studio designer create this class as the base of AssessmentForm / MarksForm / ModuleForm
+        public ModernDialog() : this("Dialog", "", 24, "OK", "Cancel", 120, 480)
+        {
+        }
+
+        //Height needed for n stacked fields (each field is 76 px tall with a 10 px gap)
+        protected static int FieldsHeight(int count)
+        {
+            return count * 76 + (count - 1) * 10;
+        }
+
+        //Stacks fields top to bottom inside the content area
+        protected void StackFields(params Control[] fields)
+        {
+            //controls docked to the top are laid out in reverse order of adding
+            for (int i = fields.Length - 1; i >= 0; i--)
+            {
+                fields[i].Dock = DockStyle.Top;
+                ContentArea.Controls.Add(fields[i]);
+                if (i > 0)
+                {
+                    Panel gap = new Panel();
+                    gap.Dock = DockStyle.Top;
+                    gap.Height = 10;
+                    ContentArea.Controls.Add(gap);
+                }
+            }
+        }
+
         protected ModernDialog(string title, string subtitle, int subtitleHeight, string primaryText,
                                string secondaryText, int contentHeight, int width)
         {
@@ -78,7 +107,7 @@ namespace IAmOnTrack.UI
                 DialogResult = DialogResult.Cancel;
                 return true;
             }
-            if (keyData == Keys.Enter)
+            if (keyData == Keys.Enter && !(ActiveControl is SelectField))
             {
                 OnPrimaryClick();
                 return true;

@@ -10,6 +10,18 @@ namespace IAmOnTrack.UI
     {
         private readonly TextBox _input;
         private readonly string _label;
+        private string _hint = "";
+
+        //Small muted text on the right of the label (e.g. "60% still available")
+        public string Hint
+        {
+            get { return _hint; }
+            set
+            {
+                _hint = value ?? "";
+                Invalidate();
+            }
+        }
 
         public string Value
         {
@@ -62,6 +74,10 @@ namespace IAmOnTrack.UI
             g.Clear(BackColor);
 
             Theme.Text(g, _label, Theme.Semibold(13.5f), new RectangleF(2, 0, Width, 22), Theme.Charcoal, Theme.SingleLine);
+            if (_hint.Length > 0)
+            {
+                Theme.Text(g, _hint, Theme.Font(13), new RectangleF(0, 0, Width - 2, 22), Theme.Muted, Theme.SingleLine | TextFormatFlags.Right);
+            }
 
             RectangleF box = new RectangleF(0.5f, 26.5f, Width - 1, 45);
             Theme.FillRounded(g, Theme.White, box, 12);

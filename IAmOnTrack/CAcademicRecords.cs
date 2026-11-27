@@ -115,6 +115,39 @@ namespace IAmOnTrack
 
         // ---------------- Changing data (existing model methods do the validation) ----------------
 
+        //Registers a new module. The CModules constructor validates every value and CMarkTracker rejects duplicates.
+        public CModules AddModule(string moduleCode, string moduleName, int academicYear, int semester)
+        {
+            CModules module = new CModules(moduleCode, moduleName, academicYear, semester);
+            _tracker.AddModule(module);
+            _activityLog.Record(ActivityKind.ModuleUpdated, "Added module " + module.ModuleCode);
+            return module;
+        }
+
+        //Creates an assessment and adds it to a module. CAssessments validates the values and CModules checks
+        //for duplicate names and for the combined weight going over 100%.
+        public CAssessments AddAssessment(CModules module, string assessmentName, double weight, double maximumMark)
+        {
+            if (module == null)
+            {
+                throw new ArgumentNullException(nameof(module), "Module cannot be null");
+            }
+            CAssessments assessment = new CAssessments(assessmentName, weight, maximumMark);
+            _tracker.AddAssessment(module.ModuleCode, module.AcademicYear, module.Semester, assessment);
+            _activityLog.Record(ActivityKind.AssessmentAdded, "Added " + assessment.AssessmentName + " to " + module.ModuleCode);
+            return assessment;
+        }
+
+        //How much of the module's 100% is still unallocated
+        public double GetRemainingWeight(CModules module)
+        {
+            if (module == null)
+            {
+                throw new ArgumentNullException(nameof(module), "Module cannot be null");
+            }
+            return Math.Max(0, 100 - module.Assessments.Sum(a => a.AssessmentWeight));
+        }
+
         public void UpdateAssessment(CAssessmentRecord record, string newName, double newWeight)
         {
             if (record == null)
